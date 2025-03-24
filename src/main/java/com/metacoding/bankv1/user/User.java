@@ -18,10 +18,10 @@ public class User {
     @Column(unique = true, nullable = false, length = 12)  //username은 중복될 수 없다
     private String username;
 
-    @Column(nullable = false, length = 12)
+    @Column(nullable = false, length = 12)  //nullable = false -> 아무 값도 안 들어오면 공백이 들어감
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false)  //nullable = false -> 아무 값도 안 들어오면 공백이 들어감
     private String fullname;
 
     private Timestamp createdAt;  //생성날짜 (insert 된 시간)
