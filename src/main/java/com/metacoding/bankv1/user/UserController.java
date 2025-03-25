@@ -12,6 +12,7 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
+
     @GetMapping("/logout")
     public String logout() {
         session.invalidate();  // 안에 있는 걸 전부 다 버림
