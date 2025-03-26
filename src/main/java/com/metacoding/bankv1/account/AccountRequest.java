@@ -11,4 +11,11 @@ public class AccountRequest {
         private Integer balance;
     }
 
+    @Data
+    public static class TransferDTO {
+        private Integer amount;
+        private Integer withdrawNumber;
+        private Integer depositNumber;
+        private String withdrawPassword;
+    }
 }

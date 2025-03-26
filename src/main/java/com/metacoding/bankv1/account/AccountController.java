@@ -38,7 +38,7 @@ public class AccountController {
         if (sessionUser == null) throw new RuntimeException("로그인 후 사용해주세요");
 
         accountService.계좌생성(saveDTO, sessionUser.getId());
-        return "redirect:/";
+        return "redirect:/account";
     }
 
     @GetMapping("/account")
@@ -51,5 +51,24 @@ public class AccountController {
         request.setAttribute("models", accountList);
 
         return "account/list";
+    }
+
+    @GetMapping("/account/transfer-form")
+    public String transferForm() {
+        // 인증체크 (반복되는 공통부가로직)
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) throw new RuntimeException("로그인 후 사용해주세요");
+
+        return "account/transfer-form";
+    }
+
+    @PostMapping("/account/transfer")
+    public String transfer(AccountRequest.TransferDTO transferDTO) {
+        // 인증체크 (반복되는 공통부가로직)
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) throw new RuntimeException("로그인 후 사용해주세요");
+
+        accountService.계좌이체(transferDTO, sessionUser.getId());
+        return "redirect:/";  // TODO
     }
 }
