@@ -62,6 +62,20 @@ public class AccountService {
         accountRepository.updateByNumber(depositBalance, depositAccount.getPassword(), depositAccount.getNumber());
 
         // 10. History save
-        historyRepository.save(transferDTO.getWithdrawNumber(), transferDTO.getDepositNumber(), transferDTO.getAmount(), withdrawBalance);  // 검증이 끝났기 때문에 transferDTO에서 가져온다
+        historyRepository.save(transferDTO.getWithdrawNumber(), transferDTO.getDepositNumber(), transferDTO.getAmount(), withdrawAccount.getBalance(), depositAccount.getBalance());  // 검증이 끝났기 때문에 transferDTO에서 가져온다
+    }
+
+    public void 계좌상세보기(int number, String type, Integer sessionUserId) {
+        // 1. 계좌 존재 확인
+        Account account = accountRepository.findByNumber(number);
+        if (account == null) throw new RuntimeException("출금 계좌가 존재하지 않습니다");
+
+        // 2. 계좌 주인 확인
+        if (!(account.getUserId().equals(sessionUserId))) {  // Integer는 125이하까지만 값을 비교해주기 때문에 equals로 비교하는게 좋다
+            throw new RuntimeException("해당 계좌의 권한이 없습니다");
+        }
+
+        // 3. 조회
+
     }
 }
