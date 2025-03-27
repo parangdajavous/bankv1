@@ -76,7 +76,7 @@ public class AccountController {
 
     // /account/1111?type=전체
     @GetMapping("/account/{number}")
-    public String detail(@PathVariable("number") int number, @RequestParam(value = "type", required = false, defaultValue = "전체") String type) {
+    public String detail(@PathVariable("number") int number, @RequestParam(value = "type", required = false, defaultValue = "전체") String type, HttpServletRequest request) {
 //        System.out.println("number = " + number);
 //        System.out.println("type = " + type);
 
@@ -84,7 +84,8 @@ public class AccountController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         if (sessionUser == null) throw new RuntimeException("로그인 후 사용해주세요");
 
-        accountService.계좌상세보기(number, type, sessionUser.getId());  // sessionUser.getId()로 권한체크 필요
+        List<AccountResponse.DetailDTO> datailList = accountService.계좌상세보기(number, type, sessionUser.getId());  // sessionUser.getId()로 권한체크 필요
+        request.setAttribute("models", datailList);
         return "account/detail";
     }
 }
